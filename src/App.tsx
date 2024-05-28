@@ -1,3 +1,4 @@
+import ProtectedRoute from "@components/protected-route";
 import { useEffect, useState } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import styled, { createGlobalStyle } from "styled-components";
@@ -13,7 +14,11 @@ import { Profile } from "./routes/Profile";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout />,
+    element: (
+      <ProtectedRoute>
+        <Layout />
+      </ProtectedRoute>
+    ),
     children: [
       {
         path: "",
@@ -53,9 +58,11 @@ function App() {
     await auth.authStateReady();
     setLoading(false);
   };
+
   useEffect(() => {
     init();
   }, []);
+
   return (
     <Wrapper>
       <GlobalStyles />
